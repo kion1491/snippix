@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Snippix
 
-## Getting Started
+가입 없이, 서버 전송 없이 — 브라우저에서 바로 쓰는 이미지 편집기.
 
-First, run the development server:
+자르기, 슬라이스, 크기 조정, 회전·반전까지 자주 쓰는 이미지 작업을 한 화면에서 빠르게 처리합니다.
+
+---
+
+## 특징
+
+- **클라이언트 사이드 처리** — 이미지가 서버로 전송되지 않습니다. 모든 처리는 브라우저 안에서 이뤄집니다.
+- **가입 불필요** — 페이지를 열면 바로 사용할 수 있습니다.
+- **한 화면 완결** — 이미지 불러오기 → 편집 → 다운로드가 페이지 이동 없이 완료됩니다.
+- **다크/라이트 모드** 지원
+
+---
+
+## 기능
+
+### 이미지 불러오기
+- 드래그 앤 드롭, 파일 선택 다이얼로그
+- 클립보드 붙여넣기 (Ctrl+V / Cmd+V)
+- URL로 불러오기
+- 지원 포맷: JPG, PNG, WebP, GIF, SVG, AVIF
+
+### 자르기 (Crop)
+- 핸들 드래그로 자유롭게 영역 선택
+- 비율 프리셋 (1:1, 4:3, 16:9 등)
+- 소셜미디어 사이즈 프리셋 (Instagram, YouTube, Facebook 등)
+- X·Y 좌표 및 너비·높이 픽셀 직접 입력
+
+### 슬라이스 (Slice)
+- N×M 격자로 이미지를 균등 분할
+- 격자 프리셋 (2×2, 3×3, 1×3 등)
+- 분할된 이미지를 ZIP으로 한 번에 다운로드
+- 파일명 자동 명명: `이미지명_r1_c1.png` 형식
+
+### 크기 조정 (Resize)
+- 픽셀 직접 입력 또는 퍼센트로 조정
+- 가로세로 비율 잠금 토글
+- 업스케일 시 화질 저하 경고 표시
+- 퍼센트 프리셋 (25%, 50%, 75%, 100%, 150%, 200%)
+
+### 회전·반전 (Rotate & Flip)
+- 90° 단위 빠른 회전, 자유 각도 입력 (슬라이더 + 직접 입력)
+- 좌우·상하 반전
+- 회전 결과 실시간 미리보기
+
+### 내보내기
+- PNG, JPG, WebP, PDF 포맷으로 다운로드
+- 원본으로 되돌리기
+
+---
+
+## 기술 스택
+
+| 영역 | 사용 기술 |
+| --- | --- |
+| 프레임워크 | Next.js 16 (App Router) |
+| UI | React 19, Tailwind CSS v4, shadcn/ui (Base UI) |
+| 상태 관리 | Zustand |
+| 이미지 처리 | Canvas API (브라우저 내장) |
+| 파일 번들링 | JSZip |
+| PDF 내보내기 | jsPDF |
+| 언어 | TypeScript |
+
+---
+
+## 시작하기
 
 ```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행 (http://localhost:3000)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 프로덕션 빌드
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 만들지 않은 것
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Snippix는 의도적으로 단순하게 유지합니다. 레이어, 필터/효과, 브러시, 텍스트 추가, AI 기능, 계정 시스템 등은 범위 밖입니다.
