@@ -4,28 +4,6 @@ import { decodeImage } from "./load";
 
 const LOSSY_QUALITY = 0.92;
 
-export function downloadCanvas(
-  canvas: HTMLCanvasElement,
-  filename: string,
-  mime = "image/png",
-  quality = 1
-): void {
-  canvas.toBlob(
-    (blob) => {
-      if (!blob) return;
-      triggerDownload(blob, filename);
-    },
-    mime,
-    quality
-  );
-}
-
-export function downloadFromSrc(src: string, filename: string): void {
-  const a = document.createElement("a");
-  a.href = src;
-  a.download = filename;
-  a.click();
-}
 
 export async function downloadAs(
   src: string,

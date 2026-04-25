@@ -1,4 +1,4 @@
-export const SUPPORTED_MIMES = new Set([
+const SUPPORTED_MIMES = new Set([
   "image/jpeg",
   "image/png",
   "image/webp",
@@ -7,7 +7,7 @@ export const SUPPORTED_MIMES = new Set([
   "image/avif",
 ]);
 
-export const MIME_TO_EXT: Record<string, string> = {
+const MIME_TO_EXT: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",

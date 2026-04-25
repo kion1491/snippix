@@ -1,7 +1,6 @@
 "use client";
 
-import { Check, FlipHorizontal, FlipVertical, RotateCcw, RotateCw, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FlipHorizontal, FlipVertical, RotateCcw, RotateCw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -9,8 +8,10 @@ import { Slider } from "@/components/ui/slider";
 import { useEditorStore } from "@/store/editor-store";
 import { rotateImage } from "@/lib/image/rotate";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { presetButtonClass } from "@/lib/utils";
 import { useState } from "react";
+import { ToolFooter } from "@/components/tools/ToolFooter";
+import { SectionHeader } from "@/components/tools/SectionHeader";
 
 const QUICK_ANGLES = [
   { label: "90° 좌", icon: RotateCcw, delta: -90 },
@@ -74,9 +75,7 @@ export function RotateOptions() {
 
         {/* 빠른 회전 */}
         <section>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-            빠른 회전
-          </h3>
+          <SectionHeader>빠른 회전</SectionHeader>
           <div className="grid grid-cols-3 gap-1">
             {QUICK_ANGLES.map(({ label, icon: Icon, delta }) => (
               <button
@@ -96,9 +95,7 @@ export function RotateOptions() {
         {/* 자유 회전 */}
         <section>
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              각도
-            </h3>
+            <SectionHeader>각도</SectionHeader>
             <div className="flex items-center gap-1">
               <Input
                 type="number"
@@ -131,30 +128,18 @@ export function RotateOptions() {
 
         {/* 반전 */}
         <section>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-            반전
-          </h3>
+          <SectionHeader>반전</SectionHeader>
           <div className="grid grid-cols-2 gap-1">
             <button
               onClick={() => setRotateTransform(angle, !flipH, flipV)}
-              className={cn(
-                "h-8 rounded-md text-xs font-medium border transition-colors flex items-center justify-center gap-1.5",
-                flipH
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background border-border hover:bg-muted"
-              )}
+              className={presetButtonClass(flipH, "flex items-center justify-center gap-1.5")}
             >
               <FlipHorizontal className="w-3.5 h-3.5" />
               좌우 반전
             </button>
             <button
               onClick={() => setRotateTransform(angle, flipH, !flipV)}
-              className={cn(
-                "h-8 rounded-md text-xs font-medium border transition-colors flex items-center justify-center gap-1.5",
-                flipV
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background border-border hover:bg-muted"
-              )}
+              className={presetButtonClass(flipV, "flex items-center justify-center gap-1.5")}
             >
               <FlipVertical className="w-3.5 h-3.5" />
               상하 반전
@@ -182,17 +167,12 @@ export function RotateOptions() {
         </section>
       </div>
 
-      {/* 액션 버튼 */}
-      <div className="flex items-center gap-2 p-4 border-t border-border">
-        <Button variant="outline" className="flex-1" onClick={handleCancel} disabled={applying}>
-          <X className="w-4 h-4 mr-1" />
-          취소
-        </Button>
-        <Button className="flex-1" onClick={handleApply} disabled={applying || isIdentity}>
-          <Check className="w-4 h-4 mr-1" />
-          {applying ? "적용 중..." : "적용"}
-        </Button>
-      </div>
+      <ToolFooter
+        applying={applying}
+        applyDisabled={isIdentity}
+        onCancel={handleCancel}
+        onApply={handleApply}
+      />
     </div>
   );
 }

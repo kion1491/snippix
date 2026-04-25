@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Lock, Unlock, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Lock, Unlock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -10,7 +9,9 @@ import { Switch } from "@/components/ui/switch";
 import { useEditorStore } from "@/store/editor-store";
 import { resizeImage } from "@/lib/image/resize";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { presetButtonClass } from "@/lib/utils";
+import { ToolFooter } from "@/components/tools/ToolFooter";
+import { SectionHeader } from "@/components/tools/SectionHeader";
 
 const PERCENT_PRESETS = [25, 50, 75, 100, 150, 200];
 
@@ -87,20 +88,13 @@ export function ResizeOptions() {
       <div className="flex-1 overflow-y-auto p-4 space-y-5">
         {/* 입력 방식 토글 */}
         <section>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-            입력 방식
-          </h3>
+          <SectionHeader>입력 방식</SectionHeader>
           <div className="grid grid-cols-2 gap-1">
             {(["pixel", "percent"] as const).map((m) => (
               <button
                 key={m}
                 onClick={() => switchMode(m)}
-                className={cn(
-                  "h-8 rounded-md text-xs font-medium border transition-colors",
-                  mode === m
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background border-border hover:bg-muted"
-                )}
+                className={presetButtonClass(mode === m)}
               >
                 {m === "pixel" ? "픽셀" : "퍼센트"}
               </button>
@@ -134,9 +128,7 @@ export function ResizeOptions() {
         {/* 픽셀 입력 */}
         {mode === "pixel" && (
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-              크기 (픽셀)
-            </h3>
+            <SectionHeader>크기 (픽셀)</SectionHeader>
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-1">
                 <Label htmlFor="resize-w" className="text-xs">너비</Label>
@@ -167,9 +159,7 @@ export function ResizeOptions() {
         {/* 퍼센트 입력 */}
         {mode === "percent" && (
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-              비율 (%)
-            </h3>
+            <SectionHeader>비율 (%)</SectionHeader>
             <div className="space-y-2">
               <Input
                 type="number"
@@ -186,12 +176,7 @@ export function ResizeOptions() {
                   <button
                     key={p}
                     onClick={() => setPercent(p)}
-                    className={cn(
-                      "h-8 rounded-md text-xs font-medium border transition-colors",
-                      percent === p
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-background border-border hover:bg-muted"
-                    )}
+                    className={presetButtonClass(percent === p)}
                   >
                     {p}%
                   </button>
@@ -221,17 +206,7 @@ export function ResizeOptions() {
         </section>
       </div>
 
-      {/* 액션 버튼 */}
-      <div className="flex items-center gap-2 p-4 border-t border-border">
-        <Button variant="outline" className="flex-1" onClick={handleCancel} disabled={applying}>
-          <X className="w-4 h-4 mr-1" />
-          취소
-        </Button>
-        <Button className="flex-1" onClick={handleApply} disabled={applying}>
-          <Check className="w-4 h-4 mr-1" />
-          {applying ? "적용 중..." : "적용"}
-        </Button>
-      </div>
+      <ToolFooter applying={applying} onCancel={handleCancel} onApply={handleApply} />
     </div>
   );
 }
