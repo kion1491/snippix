@@ -1,5 +1,6 @@
 import { getExportFormatDef, stripExtension, type ExportFormat } from "./formats";
 import { imageSrcToPdfBlob } from "./pdf";
+import { decodeImage } from "./load";
 
 const LOSSY_QUALITY = 0.92;
 
@@ -43,7 +44,7 @@ export async function downloadAs(
 }
 
 async function imageSrcToRasterBlob(src: string, mime: string): Promise<Blob> {
-  const img = await loadImage(src);
+  const img = await decodeImage(src);
   const canvas = document.createElement("canvas");
   canvas.width = img.naturalWidth;
   canvas.height = img.naturalHeight;
@@ -67,15 +68,6 @@ async function imageSrcToRasterBlob(src: string, mime: string): Promise<Blob> {
   });
 }
 
-function loadImage(src: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error("이미지를 불러올 수 없습니다."));
-    img.src = src;
-  });
-}
 
 export function downloadBlob(blob: Blob, filename: string): void {
   triggerDownload(blob, filename);
