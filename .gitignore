@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright mcp 테스트 아티팩트
+.playwright-mcp/
+*.png
+.mcp.json
