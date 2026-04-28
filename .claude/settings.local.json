@@ -12,7 +12,12 @@
       "Bash(npm install *)",
       "Bash(npm view *)",
       "Bash(npx shadcn@latest add input label textarea checkbox switch select separator badge avatar skeleton tooltip scroll-area card form dialog alert-dialog sheet popover dropdown-menu tabs accordion sonner command --yes)",
-      "Bash(npx shadcn@latest add form --yes)"
+      "Bash(npx shadcn@latest add form --yes)",
+      "mcp__playwright"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "playwright"
+  ],
+  "enableAllProjectMcpServers": true
 }
